@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-import pandas as pd
+import pandas as pand
 import numpy as np
 import xgboost as xgb
 from flask_cors import CORS
@@ -38,10 +38,10 @@ def predict_load_shedding(model_name, from_date, to_date):
     # Load the specified model
     reg.load_model(model_name)
     
-    future_dates = pd.date_range(from_date, to_date, freq='D')
-    future_df = pd.DataFrame(index=future_dates)
+    future_dates = pand.date_range(from_date, to_date, freq='D')
+    future_df = pand.DataFrame(index=future_dates)
     future_df['isFuture'] = True
-    future_df = create_features_with_lags(future_df)  # Update to use create_features_with_lags
+    future_df = create_features_with_lags(future_df)  # Upandate to use create_features_with_lags
     future_predictions = reg.predict(future_df.drop(columns=['isFuture']))  # Drop 'isFuture' column
     
     # Convert float32 predictions to regular Python floats
